@@ -20,7 +20,7 @@
 			$last_modif = filemtime("./logs/".$room.".txt");
 			if($last_update != $last_modif) {
 				$logs = file_get_contents("./logs/".$room.".txt");
-				$reply = array('lastud' => $last_modif, 'logs' => array(json_decode(stripslashes($logs))));
+				$reply = array('lastud' => $last_modif, 'logs' => json_decode("[".stripslashes($logs)."]"));
 				print json_encode($reply);
 				ob_flush();
 				flush();
