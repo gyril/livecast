@@ -6,7 +6,7 @@
 	if(!$msg) {
 		die("-1");
 	} else {
-		$entry = ',{"time":' . $time . ',"msg":"' . $msg . '"}';
+		$entry = ',{"time":' . $time . ',"msg":"' . nl2br($msg) . '"}';
 		$logfile = "./logs/" . $room . ".txt";
 		$fh = fopen($logfile, 'a');
 		fwrite($fh, $entry);

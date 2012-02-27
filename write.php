@@ -2,14 +2,13 @@
 	$room = isset($_GET['room']) ? $_GET['room'] : false;
 	if(!$room) {
 		header("Location: http://6ou.fr/balloop/room.php");
-		die();
 	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Balloop</title>
+		<title>Livecast</title>
 		<script type="text/javascript">
 			var room = "<?php echo $room; ?>";
 			function send() {
@@ -18,7 +17,7 @@
 				xhr = new XMLHttpRequest();
 				xhr.open("POST","./log.php",true);
 				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				xhr.send("msg="+msg.value+"&room="+room);
+				xhr.send("msg="+msg.value.replace(/\n\r?/g, '<br>')+"&room="+room);
 				xhr.onreadystatechange=function() {
 					if(xhr.readyState==4 && xhr.status==200) {
 						msg.value = "";
@@ -43,13 +42,11 @@
 
 	</head>
 	
-	<body>
-		<?php
-			echo "<p>Vous écrivez pour la salle : " . $room . ".</p>";
-		?>
-		<br>
-		<p>Votre message : </p>
-		<input type="text" id="msg" name="msg" /><br>
-		<input type="button" value="Envoyer" onclick="send()" />
+	<body style="width: 600px;margin: 0 auto; background: url('../bgg.png');">
+		<p style="color: white;font-family: Arial;font-weight: 100;">Votre message</p>
+		<form onsubmit="send(); return false">
+			<textarea style="width: 100%; height: 8em" id="msg" name="msg"></textarea>
+			<input type="submit" value="Envoyer" style="float: right;background: white;border: 1px solid black;width: 100px;height: 30px;margin: 5px;color: #000000;font-size: 1em;">
+		</form>
 	</body>
 </html>
